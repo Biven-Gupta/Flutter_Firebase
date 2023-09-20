@@ -11,18 +11,12 @@ class ListStudent extends StatefulWidget {
 
 class _ListStudentState extends State<ListStudent> {
   // Show Data
-  final Stream<QuerySnapshot> studentStream =
-      FirebaseFirestore.instance.collection('Students').snapshots();
+  final Stream<QuerySnapshot> studentStream = FirebaseFirestore.instance.collection('Students').snapshots();
 
   // For Deletion
-  CollectionReference students =
-      FirebaseFirestore.instance.collection('Students');
+  CollectionReference students = FirebaseFirestore.instance.collection('Students');
   Future<void> deleteUser(id) async {
-    return students
-        .doc(id)
-        .delete()
-        .then((value) => print('User Deleted'))
-        .catchError((error) => print('Failed to Delete user: $error'));
+    return students.doc(id).delete().then((value) => print('User Deleted')).catchError((error) => print('Failed to Delete user: $error'));
   }
 
   @override
@@ -39,21 +33,19 @@ class _ListStudentState extends State<ListStudent> {
           );
         }
         final List storedocs = [];
-        snapshot.data!.docs.map((DocumentSnapshot document) {
+        snapshot.data?.docs.map((DocumentSnapshot document) {
           Map a = document.data() as Map<String, dynamic>;
           storedocs.add(a);
           a['id'] = document.id;
         }).toList();
 
         return Container(
-          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Table(
               border: TableBorder.all(),
-              columnWidths: const <int, TableColumnWidth>{
-                1: FixedColumnWidth(140)
-              },
+              columnWidths: const <int, TableColumnWidth>{1: FixedColumnWidth(140)},
               defaultVerticalAlignment: TableCellVerticalAlignment.middle,
               children: [
                 TableRow(
@@ -61,8 +53,8 @@ class _ListStudentState extends State<ListStudent> {
                     TableCell(
                       child: Container(
                         color: Colors.blueAccent,
-                        padding: EdgeInsets.all(10),
-                        child: Center(
+                        padding: const EdgeInsets.all(10),
+                        child: const Center(
                           child: Text(
                             'Name',
                             style: TextStyle(
@@ -76,8 +68,8 @@ class _ListStudentState extends State<ListStudent> {
                     TableCell(
                       child: Container(
                         color: Colors.blueAccent,
-                        padding: EdgeInsets.all(10),
-                        child: Center(
+                        padding: const EdgeInsets.all(10),
+                        child: const Center(
                           child: Text(
                             'Email',
                             style: TextStyle(
@@ -91,8 +83,8 @@ class _ListStudentState extends State<ListStudent> {
                     TableCell(
                       child: Container(
                         color: Colors.blueAccent,
-                        padding: EdgeInsets.all(10),
-                        child: Center(
+                        padding: const EdgeInsets.all(10),
+                        child: const Center(
                           child: Text(
                             'Action',
                             style: TextStyle(
@@ -110,11 +102,11 @@ class _ListStudentState extends State<ListStudent> {
                     children: [
                       TableCell(
                         child: Padding(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           child: Center(
                             child: Text(
                               storedocs[i]['name'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 18.0,
                               ),
                             ),
@@ -123,11 +115,11 @@ class _ListStudentState extends State<ListStudent> {
                       ),
                       TableCell(
                         child: Padding(
-                          padding: EdgeInsets.all(5),
+                          padding: const EdgeInsets.all(5),
                           child: Center(
                             child: Text(
                               storedocs[i]['email'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 18.0,
                               ),
                             ),
@@ -144,11 +136,10 @@ class _ListStudentState extends State<ListStudent> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => UpdateStudent(
-                                            id: storedocs[i]['id']),
+                                        builder: (context) => UpdateStudent(id: storedocs[i]['id']),
                                       ));
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.edit,
                                   color: Colors.orangeAccent,
                                 ),
@@ -157,7 +148,7 @@ class _ListStudentState extends State<ListStudent> {
                                 onPressed: () {
                                   deleteUser(storedocs[i]['id']);
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.delete,
                                   color: Colors.red,
                                 ),
